@@ -297,17 +297,23 @@ img {
   height: auto;
 }
 hr {
-  margin: 40px 0;
-  height: 3px;
-  border: none;
-  background-color: #ddd;
-  background-image: repeating-linear-gradient(-45deg, #fff, #fff 4px, transparent 4px, transparent 8px);
+  border-style: solid;
+  border-width: 1px 0 0;
+  border-color: rgba(0,0,0,0.1);
+  -webkit-transform-origin: 0 0;
+  -webkit-transform: scale(1, 0.5);
+  transform-origin: 0 0;
+  transform: scale(1, 0.5);
 }
 blockquote {
   margin: 0;
-  padding: 0 15px;
-  color: #666;
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #dce6f0;
+  line-height: 8px;
+  padding: 20px 15px 0px 10px;
+  font-size: 0.9em;
+  color: #819198;
+  background: #f2f7fb;
+  overflow: auto;
 }
 blockquote cite::before {
   content: "-";
@@ -1765,7 +1771,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #40c321;
+  background: #818b05;
 }
 .feed-link,
 .chat {
