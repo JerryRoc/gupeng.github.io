@@ -403,7 +403,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-25 15:28:36" itemprop="dateModified" datetime="2019-04-25T15:28:36+08:00">2019-04-25</time>
+                <time title="Modified: 2019-04-25 15:49:21" itemprop="dateModified" datetime="2019-04-25T15:49:21+08:00">2019-04-25</time>
               
             
           </span>
@@ -529,12 +529,12 @@
 <p>目前使用的图模型有3种，分别是属性图（Property Graph）、资源描述框架（RDF，Resource Description Framework）和超图（HyperGraph）。</p>
 <ol>
 <li><p><strong>属性图（Property Graph）</strong>：目前主流图数据库选择的数据模型，更确切的说是带标签的属性图（Labeled-Property Graph）。除了图所共有节点和边的概念，我们已经在上面介绍了属性和标签的概念。我们可以用一个属性图来表达属性图各元素的关系：</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_property_graph_model.jpg&quot;graph_of_property_graph_model&quot;" alt="graph of property graph model"></p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_property_graph_model.jpg" alt="graph of property graph model" title="graph_of_property_graph_model"></p>
 </li>
 <li><p>资源描述框架（RDF，Resource Description Framework）：在一个 RDF 中，增加的信息都以单独的节点表示。RDF由节点和边组成，节点表示实体/资源或者属性，边则表示了实体和实体之间的关系以及实体和属性的关系。相较于属性图，对属性的处理方式不一样。例如，如果要为某个”人“节点增加”name“属性，对于属性图来说，在这个”人“的”name“属性上设置名字，而在 RDF 中，直接通过一条”hasName“的边指向了设置名字。RDF 形式上表示为SPO（Subject - Predicte - Object）三元组，有时候也称为一条语句（Statement）。RDF 比较多地被使用在知识图谱中，那我们也通常称一条语句为一条知识。许多图数据库是基于RDF实现的，包括：AllegroGraph，Virtuoso，Blazegraph和Stardog。</p>
 </li>
 <li><p>超图（HyperGraph）：不同于属性图和 RDF，超图的边可以连接任意数量（不能为 0）的节点，超图的边又称为超边（hyperedges）。如图是一个典型的超图：</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Hypergraph_example.png&quot;Hypergraph_example&quot;" alt="Hypergraph example"></p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Hypergraph_example.png" alt="Hypergraph example" title="Hypergraph_example"></p>
 </li>
 </ol>
 <p>主流的开源图数据库 Neo4j 和 JanusGraph 都采用属性图的数据模型。不同的是，Neo4j 使用原生图存储，JanusGraph 使用非原生图存储，将图结构序列化存储到基于 BigTable Model 的数据库（例如 Cassandra，HBase）中。原生图存储为存储和使用图做了更多的优化，遍历查询性能更高，但非遍历类的查询则不占优势，且为了全局搜索还会占用大量内存。</p>
@@ -699,7 +699,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-24 14:25:44" itemprop="dateModified" datetime="2019-04-24T14:25:44+08:00">2019-04-24</time>
+                <time title="Modified: 2019-04-25 15:46:55" itemprop="dateModified" datetime="2019-04-25T15:46:55+08:00">2019-04-25</time>
               
             
           </span>
@@ -757,14 +757,10 @@
 <p>博客会针对这四个方面的内容，记录工作中的探索和心得。当然，我也会关注”如何快速成长为数据科学家“这一主题，提供一系列的课程，但这不会是本博客的主要内容。</p>
 <h5 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h5><hr>
 <ol>
-<li><p>Yes&amp;NoSQL：主要关注数据库知识，了解㓊类型的数据是如何存储和取用的。包括但不限于传统关系型数据库的原理和使用、图片等非结构化数据如何存储、有什么好的工具提供完整的平台解决方案；</p>
-</li>
-<li><p>GeekStyle：主要关注计算机知识，对于一个 Data Scientist 来说，我会更关注如何高效工作。包括但不限于如何选择生产工具、如何自动化建立机器学习模型、如何高效利用多台计算机建立模型；</p>
-</li>
-<li><p>AnalyzeAnything：主要关注数据分析、数据挖掘，了解如何让数据说话，让数据真正产生价值。包括但不限于如何可视化你的数据、如何进行数学建模的过程、怎样去解决你的业务问题；</p>
-</li>
-<li><p>Algorithm：关注算法知识，了解最前沿的算法和工具。包括但不限于算法的原理和案例、如何理解算法的超参和算的局限性。</p>
-</li>
+<li>Yes&amp;NoSQL：主要关注数据库知识，了解㓊类型的数据是如何存储和取用的。包括但不限于传统关系型数据库的原理和使用、图片等非结构化数据如何存储、有什么好的工具提供完整的平台解决方案；</li>
+<li>GeekStyle：主要关注计算机知识，对于一个 Data Scientist 来说，我会更关注如何高效工作。包括但不限于如何选择生产工具、如何自动化建立机器学习模型、如何高效利用多台计算机建立模型；</li>
+<li>AnalyzeAnything：主要关注数据分析、数据挖掘，了解如何让数据说话，让数据真正产生价值。包括但不限于如何可视化你的数据、如何进行数学建模的过程、怎样去解决你的业务问题；</li>
+<li>Algorithm：关注算法知识，了解最前沿的算法和工具。包括但不限于算法的原理和案例、如何理解算法的超参和算的局限性。</li>
 </ol>
 <h5 id="文章索引"><a href="#文章索引" class="headerlink" title="文章索引"></a>文章索引</h5><hr>
 <p>所有文章将可以在此页面进行索引和跳转，新的文章也可能在此页面进行预告~</p>
@@ -772,7 +768,8 @@
 <p>Yes&amp;NoSQL</p>
 </blockquote>
 <ol>
-<li>图数据库概览（TODO）</li>
+<li><a href="https://jerryroc.github.io/2019/04/21/Introduction-to-Graph-Database/" target="_blank" rel="noopener">图数据库：概览</a></li>
+<li>图数据库：JanusGraph 简介（TODO）</li>
 </ol>
 <blockquote>
 <p>GeekStyle</p>

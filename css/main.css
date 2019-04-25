@@ -307,13 +307,10 @@ hr {
 }
 blockquote {
   margin: 0;
-  border-left: 4px solid #dce6f0;
-  line-height: 8px;
-  padding: 20px 15px 0px 10px;
-  font-size: 0.9em;
+  padding: 0 15px;
   color: #819198;
   background: #f2f7fb;
-  overflow: auto;
+  border-left: 4px solid #dce6f0;
 }
 blockquote cite::before {
   content: "-";
@@ -1771,7 +1768,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff6ae3;
+  background: #df6e32;
 }
 .feed-link,
 .chat {
