@@ -96,17 +96,24 @@
 
 
 
-  <meta name="description" content="Teradata Data Scientist.">
-<meta name="keywords" content="data science, machine learning, data mining">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Peng&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="从 Yes&amp;amp;NoSQL 说起 在文章开始之前，先解释下为什么文章标签是 “Yes&amp;amp;NoSQL”。不同于传统的关系型数据库，NoSQL 是 “not only SQL” 的缩写，特指不以 SQL 为中心的任何非关系型数据库。比较常见的错误是，把 “NoSQL” 理解为 “NO SQL”，所以使用 “Yes&amp;amp;NoSQL” 代表关系型及非关系型数据库，关注所有数据库知识。 NoS">
+<meta name="keywords" content="graph database,Neo4j,JanusGraph">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Graph Database">
+<meta property="og:url" content="http://yoursite.com/2019/04/21/Introduction-to-Graph-Database/index.html">
 <meta property="og:site_name" content="Peng&#39;s Blog">
-<meta property="og:description" content="Teradata Data Scientist.">
+<meta property="og:description" content="从 Yes&amp;amp;NoSQL 说起 在文章开始之前，先解释下为什么文章标签是 “Yes&amp;amp;NoSQL”。不同于传统的关系型数据库，NoSQL 是 “not only SQL” 的缩写，特指不以 SQL 为中心的任何非关系型数据库。比较常见的错误是，把 “NoSQL” 理解为 “NO SQL”，所以使用 “Yes&amp;amp;NoSQL” 代表关系型及非关系型数据库，关注所有数据库知识。 NoS">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/popularity_changes_per_db_cate_201904.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_the_gods.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Neo4j_vs_Relation_DBMS.jpg">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_property_graph_model.jpg" graph_of_property_graph_model"">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Hypergraph_example.png" hypergraph_example"">
+<meta property="og:updated_time" content="2019-04-25T07:28:36.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peng&#39;s Blog">
-<meta name="twitter:description" content="Teradata Data Scientist.">
+<meta name="twitter:title" content="Introduction to Graph Database">
+<meta name="twitter:description" content="从 Yes&amp;amp;NoSQL 说起 在文章开始之前，先解释下为什么文章标签是 “Yes&amp;amp;NoSQL”。不同于传统的关系型数据库，NoSQL 是 “not only SQL” 的缩写，特指不以 SQL 为中心的任何非关系型数据库。比较常见的错误是，把 “NoSQL” 理解为 “NO SQL”，所以使用 “Yes&amp;amp;NoSQL” 代表关系型及非关系型数据库，关注所有数据库知识。 NoS">
+<meta name="twitter:image" content="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/popularity_changes_per_db_cate_201904.png">
 
 
 
@@ -114,7 +121,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/21/Introduction-to-Graph-Database/">
 
 
 
@@ -124,7 +131,7 @@
   };
 </script>
 
-  <title>Peng's Blog</title>
+  <title>Introduction to Graph Database | Peng's Blog</title>
   
 
 
@@ -172,8 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -211,7 +217,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -324,9 +330,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -358,10 +364,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/21/Introduction-to-Graph-Database/" class="post-title-link" itemprop="url">Introduction to Graph Database</a>
+          <h1 class="post-title" itemprop="name headline">Introduction to Graph Database
+
               
             
           </h1>
@@ -431,11 +435,31 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/04/21/Introduction-to-Graph-Database/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/04/21/Introduction-to-Graph-Database/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
 
           
@@ -455,9 +479,7 @@
       
 
       
-        
-          
-            <h5 id="从-Yes-amp-NoSQL-说起"><a href="#从-Yes-amp-NoSQL-说起" class="headerlink" title="从 Yes&amp;NoSQL 说起"></a>从 Yes&amp;NoSQL 说起</h5><hr>
+        <h5 id="从-Yes-amp-NoSQL-说起"><a href="#从-Yes-amp-NoSQL-说起" class="headerlink" title="从 Yes&amp;NoSQL 说起"></a>从 Yes&amp;NoSQL 说起</h5><hr>
 <p>在文章开始之前，先解释下为什么文章标签是 “Yes&amp;NoSQL”。不同于传统的关系型数据库，NoSQL 是 “not only SQL” 的缩写，特指不以 SQL 为中心的任何非关系型数据库。比较常见的错误是，把 “NoSQL” 理解为 “NO SQL”，所以使用 “Yes&amp;NoSQL” 代表关系型及非关系型数据库，关注所有数据库知识。</p>
 <p>NoSQL 包含图数据库 (Graph DBMS)，时间序列数据库(Time Series DBMS)，宽列存储(Wide Column Stores，也称基于 Big Table 的存储)等等。典型的 NoSQL 数据库比如 Redis，MongoDB，HBase等等。</p>
 <p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/popularity_changes_per_db_cate_201904.png" alt="popularity changes per db category 201904" title="popularity_changes_per_db_cate_201904"></p>
@@ -582,8 +604,6 @@
 <li>WIKIPEDIA Graph_database， <a href="https://en.wikipedia.org/wiki/Graph_database" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Graph_database</a></li>
 </ol>
 
-          
-        
       
     </div>
 
@@ -592,6 +612,12 @@
     
     
     
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="https://github.com/JerryRoc/graphs/raw/master/20190417%20Hello%20World/wechat_qcode.png" alt="GuPeng wechat" style="width: 200px; max-width: 100%;">
+  <div>扫码订阅公众号</div>
+</div>
 
     
 
@@ -604,225 +630,40 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/Hello-World/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GuPeng">
-      <meta itemprop="description" content="Teradata Data Scientist.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Peng's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/20/Hello-World/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-04-20 21:44:44" itemprop="dateCreated datePublished" datetime="2019-04-20T21:44:44+08:00">2019-04-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-04-24 14:25:44" itemprop="dateModified" datetime="2019-04-24T14:25:44+08:00">2019-04-24</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/index/" itemprop="url" rel="index"><span itemprop="name">index</span></a></span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/graph-database/" rel="tag"># graph database</a>
           
-
+            <a href="/tags/Neo4j/" rel="tag"># Neo4j</a>
           
-            
-            
+            <a href="/tags/JanusGraph/" rel="tag"># JanusGraph</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>欢迎来到我的博客，我来自 Teradata，是一名 Data Scientist。作为数据科学从业者，深知数据库知识、计算机知识、数据分析能力，当然还有算法知识，都是不可或缺的。</p>
-<p>博客会针对这四个方面的内容，记录工作中的探索和心得。当然，我也会关注”如何快速成长为数据科学家“这一主题，提供一系列的课程，但这不会是本博客的主要内容。</p>
-<h5 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h5><hr>
-<ol>
-<li><p>Yes&amp;NoSQL：主要关注数据库知识，了解㓊类型的数据是如何存储和取用的。包括但不限于传统关系型数据库的原理和使用、图片等非结构化数据如何存储、有什么好的工具提供完整的平台解决方案；</p>
-</li>
-<li><p>GeekStyle：主要关注计算机知识，对于一个 Data Scientist 来说，我会更关注如何高效工作。包括但不限于如何选择生产工具、如何自动化建立机器学习模型、如何高效利用多台计算机建立模型；</p>
-</li>
-<li><p>AnalyzeAnything：主要关注数据分析、数据挖掘，了解如何让数据说话，让数据真正产生价值。包括但不限于如何可视化你的数据、如何进行数学建模的过程、怎样去解决你的业务问题；</p>
-</li>
-<li><p>Algorithm：关注算法知识，了解最前沿的算法和工具。包括但不限于算法的原理和案例、如何理解算法的超参和算的局限性。</p>
-</li>
-</ol>
-<h5 id="文章索引"><a href="#文章索引" class="headerlink" title="文章索引"></a>文章索引</h5><hr>
-<p>所有文章将可以在此页面进行索引和跳转，新的文章也可能在此页面进行预告~</p>
-<blockquote>
-<p>Yes&amp;NoSQL</p>
-</blockquote>
-<ol>
-<li>图数据库概览（TODO）</li>
-</ol>
-<blockquote>
-<p>GeekStyle</p>
-</blockquote>
-<ol>
-<li>开源 AI 分布式框架 Ray （TODO）</li>
-</ol>
-<blockquote>
-<p>AnalyzeAnything</p>
-</blockquote>
-<ol>
-<li>可视化工具概览（TODO）</li>
-</ol>
-<blockquote>
-<p>Algorithm</p>
-</blockquote>
-<ol>
-<li>TBD</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/20/Hello-World/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -832,14 +673,22 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -859,8 +708,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -963,6 +821,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#从-Yes-amp-NoSQL-说起"><span class="nav-number">1.</span> <span class="nav-text">从 Yes&amp;NoSQL 说起</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是图"><span class="nav-number">2.</span> <span class="nav-text">什么是图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#为什么需要图数据库"><span class="nav-number">3.</span> <span class="nav-text">为什么需要图数据库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据模型-amp-图计算引擎"><span class="nav-number">4.</span> <span class="nav-text">数据模型 &amp; 图计算引擎</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图数据库产品"><span class="nav-number">5.</span> <span class="nav-text">图数据库产品</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结语"><span class="nav-number">6.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1122,6 +997,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -1137,6 +1016,8 @@
 
   
 
+
+  
 
 
   
