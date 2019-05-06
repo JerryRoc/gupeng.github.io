@@ -96,17 +96,45 @@
 
 
 
-  <meta name="description" content="Everything About Data Science.">
-<meta name="keywords" content="data science, machine learning, data mining">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Peng&#39;s Blog">
-<meta property="og:url" content="https://jerryroc.github.io/index.html">
+  <meta name="description" content="上一篇博文中，我们已经对图数据库基础作了分享，介绍了图和图数据库的基本概念，今天我们的主题是：图算法。本篇博文的主要内容来源于 O’Reilly 系列的《Graph Algorithms》，作者 Amy E. Hodler &amp;amp; Mark Needham。你肯定没有读过这本书，因为这本书的发布日期是2019年5月。本文会覆盖该书的大部分内容，读完这篇，你能够了解图算法的基本概念。关于此书，作">
+<meta name="keywords" content="graph algorithm,graph analytics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Graph Algorithms">
+<meta property="og:url" content="https://jerryroc.github.io/2019/05/04/Introduction-to-Graph-Algorithms/index.html">
 <meta property="og:site_name" content="Peng&#39;s Blog">
-<meta property="og:description" content="Everything About Data Science.">
+<meta property="og:description" content="上一篇博文中，我们已经对图数据库基础作了分享，介绍了图和图数据库的基本概念，今天我们的主题是：图算法。本篇博文的主要内容来源于 O’Reilly 系列的《Graph Algorithms》，作者 Amy E. Hodler &amp;amp; Mark Needham。你肯定没有读过这本书，因为这本书的发布日期是2019年5月。本文会覆盖该书的大部分内容，读完这篇，你能够了解图算法的基本概念。关于此书，作">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Transportation_clusters.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Labeled_property_graph_model.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Connected_versus_Disconnected_Graphs.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Unweighted_Graphs_versus_Weighted_Graphs.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/The_shortest_paths_can_vary_for_unweighted_and_weighted_graph.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Undirected_Graphs_versus_Directed_Graphs.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Acyclic_Graphs_versus_Cyclic_Graphs.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Pathfinding_and_Search_Algorithms.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Breadth_First_Search.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Depth_First_Search.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/All_Pairs_Shortest_Paths.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Minimum_Spanning_Tree_algorithm.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Centrality_Algorithms.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Closeness_Centrality.PNG">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Harmonic_Centrality.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Wasserman_and_Faust_Closeness.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Betweenness_Centrality_Formula.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Betweenness_Centrality.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/PageRank_Formula.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/PageRank_Iteration.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Rank_Sink.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Community_Detection_Algorithms.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Clustering_Coefficient_Formula.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Triangle_Count_and_Clustering_Coefficient_for_Node_u.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Label_Propagation_Push_and_Pull.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Louvain_Algorithm_Process.png">
+<meta property="og:updated_time" content="2019-05-06T08:38:49.465Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Peng&#39;s Blog">
-<meta name="twitter:description" content="Everything About Data Science.">
+<meta name="twitter:title" content="Introduction to Graph Algorithms">
+<meta name="twitter:description" content="上一篇博文中，我们已经对图数据库基础作了分享，介绍了图和图数据库的基本概念，今天我们的主题是：图算法。本篇博文的主要内容来源于 O’Reilly 系列的《Graph Algorithms》，作者 Amy E. Hodler &amp;amp; Mark Needham。你肯定没有读过这本书，因为这本书的发布日期是2019年5月。本文会覆盖该书的大部分内容，读完这篇，你能够了解图算法的基本概念。关于此书，作">
+<meta name="twitter:image" content="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Transportation_clusters.png">
 
 
 
@@ -114,7 +142,7 @@
 
   
   
-  <link rel="canonical" href="https://jerryroc.github.io/">
+  <link rel="canonical" href="https://jerryroc.github.io/2019/05/04/Introduction-to-Graph-Algorithms/">
 
 
 
@@ -124,7 +152,7 @@
   };
 </script>
 
-  <title>Peng's Blog</title>
+  <title>Introduction to Graph Algorithms | Peng's Blog</title>
   
 
 
@@ -172,8 +200,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -211,7 +238,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -324,9 +351,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -358,10 +385,8 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/04/Introduction-to-Graph-Algorithms/" class="post-title-link" itemprop="url">Introduction to Graph Algorithms</a>
+          <h2 class="post-title" itemprop="name headline">Introduction to Graph Algorithms
+
               
             
           </h2>
@@ -431,11 +456,31 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/05/04/Introduction-to-Graph-Algorithms/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/04/Introduction-to-Graph-Algorithms/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
           
 
           
@@ -455,9 +500,7 @@
       
 
       
-        
-          
-            <p>上一篇<a href="https://jerryroc.github.io/2019/04/21/Introduction-to-Graph-Database/">博文</a>中，我们已经对图数据库基础作了分享，介绍了图和图数据库的基本概念，今天我们的主题是：图算法。本篇博文的主要内容来源于 O’Reilly 系列的《<a href="https://www.oreilly.com/library/view/graph-algorithms/9781492047674/" target="_blank" rel="noopener">Graph Algorithms</a>》，作者 Amy E. Hodler &amp; Mark Needham。你肯定没有读过这本书，因为这本书的发布日期是2019年5月。本文会覆盖该书的大部分内容，读完这篇，你能够了解图算法的基本概念。关于此书，作为市面上为数不多的面向数据科学应用的图算法书籍，写的比较全面系统和易懂。当然，书在细节上的提高空间还有很多。今天内容很多，坐稳~</p>
+        <p>上一篇<a href="https://jerryroc.github.io/2019/04/21/Introduction-to-Graph-Database/">博文</a>中，我们已经对图数据库基础作了分享，介绍了图和图数据库的基本概念，今天我们的主题是：图算法。本篇博文的主要内容来源于 O’Reilly 系列的《<a href="https://www.oreilly.com/library/view/graph-algorithms/9781492047674/" target="_blank" rel="noopener">Graph Algorithms</a>》，作者 Amy E. Hodler &amp; Mark Needham。你肯定没有读过这本书，因为这本书的发布日期是2019年5月。本文会覆盖该书的大部分内容，读完这篇，你能够了解图算法的基本概念。关于此书，作为市面上为数不多的面向数据科学应用的图算法书籍，写的比较全面系统和易懂。当然，书在细节上的提高空间还有很多。今天内容很多，坐稳~</p>
 <h1 id="图算法-amp-图分析"><a href="#图算法-amp-图分析" class="headerlink" title="图算法 &amp; 图分析"></a>图算法 &amp; 图分析</h1><p><strong>图分析</strong>使用基于图的方法来分析连接的数据。我们可以：查询图数据，使用基本统计信息，可视化地探索图、展示图，或者将图信息预处理后合并到机器学习任务中。图的查询通常用于局部数据分析，而图计算通常涉及整张图和迭代分析。</p>
 <p><strong>图算法</strong>是图分析的工具之一。图算法提供了一种最有效的分析连接数据的方法，它们描述了如何处理图以发现一些定性或者定量的结论。图算法基于图论，利用节点之间的关系来推断复杂系统的结构和变化。我们可以使用这些算法来发现隐藏的信息，验证业务假设，并对行为进行预测。</p>
 <p>图分析和图算法具有广泛的应用潜力：从防止欺诈，优化呼叫路由，到预测流感的传播。下图是 Martin Grandjean 创建的航线网络图，这幅图清楚地展示了航空运输集群高度连接的结构，帮助我们了解航空运力如何流动。航线网络采用典型的辐射式结构（hub-and-spoke structure），这样的结构在有限运力的前提下，增大了航线的网络的始发-到达对（OD Pair），然而却也带来了系统级联延迟的可能。</p>
@@ -595,8 +638,6 @@
 </ul>
 <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>本文更像是一篇综述，算法很干，我们会在后续继续分享图分析相关内容，敬请期待。</p>
 
-          
-        
       
     </div>
 
@@ -605,6 +646,12 @@
     
     
     
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="https://github.com/JerryRoc/graphs/raw/master/20190417%20Hello%20World/wechat_qcode.png" alt="GuPeng wechat" style="width: 200px; max-width: 100%;">
+  <div>扫码订阅公众号</div>
+</div>
 
     
 
@@ -617,496 +664,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jerryroc.github.io/2019/04/21/Introduction-to-Graph-Database/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GuPeng">
-      <meta itemprop="description" content="Everything About Data Science.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Peng's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/21/Introduction-to-Graph-Database/" class="post-title-link" itemprop="url">Introduction to Graph Database</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-04-21 20:55:51" itemprop="dateCreated datePublished" datetime="2019-04-21T20:55:51+08:00">2019-04-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-04 22:25:13" itemprop="dateModified" datetime="2019-05-04T22:25:13+08:00">2019-05-04</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Yes-NoSQL/" itemprop="url" rel="index"><span itemprop="name">Yes&NoSQL</span></a></span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/graph-algorithm/" rel="tag"># graph algorithm</a>
           
-
+            <a href="/tags/graph-analytics/" rel="tag"># graph analytics</a>
           
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="从-Yes-amp-NoSQL-说起"><a href="#从-Yes-amp-NoSQL-说起" class="headerlink" title="从 Yes&amp;NoSQL 说起"></a>从 Yes&amp;NoSQL 说起</h1><p>在文章开始之前，先解释下为什么文章标签是 “Yes&amp;NoSQL”。不同于传统的关系型数据库，NoSQL 是 “not only SQL” 的缩写，特指不以 SQL 为中心的任何非关系型数据库。比较常见的错误是，把 “NoSQL” 理解为 “NO SQL”，所以使用 “Yes&amp;NoSQL” 代表关系型及非关系型数据库，关注所有数据库知识。</p>
-<p>NoSQL 包含图数据库 (Graph DBMS)，时间序列数据库(Time Series DBMS)，宽列存储(Wide Column Stores，也称基于 Big Table 的存储)等等。典型的 NoSQL 数据库比如 Redis，MongoDB，HBase等等。</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/popularity_changes_per_db_cate_201904.png" alt="popularity changes per db category 201904"></p>
-<p>本期，我们关注图数据库。图数据库，<strong>不是存储图片的数据库</strong>，而是存储节点与他们之间关系的数据库。根据<a href="https://db-engines.com/en/ranking_categories" target="_blank" rel="noopener">DB-Engines</a>数据显示，图数据库是近五年来成长最快的数据库分类。 由于很早开始被Twitter，Facebook和Google在内的公司采用，图已经演变成当今各行各业所使用的主流技术。</p>
-<h1 id="什么是图"><a href="#什么是图" class="headerlink" title="什么是图"></a>什么是图</h1><p>图广泛存在于现实世界之中，从社交网络到金融关系，都会涉及大量的高度关联数据。这些数据构成了庞大的图，图数据库就是呈现和查询这些关联的做好的方式。</p>
-<p>图，形式上是<strong>节点</strong> (vertex，或者 node) 和<strong>边</strong> (edge) 的集合。在一张图中，一个节点代表一个实体，例如某个人，某个城市，某家公司等等。边，就是关联这些节点的关系 (relation) ，例如“王健林”是“王思聪”的父亲，“我”生活在“上海”。</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_the_gods.png" alt="Graph of the gods"></p>
-<p>如图，JanusGraph <a href="https://docs.janusgraph.org/latest/getting-started.html" target="_blank" rel="noopener">官网教程</a>中给了一个希腊神话的人物及罗马神殿关系图，是一个典型的带标签的属性图 （Labeled-Property Graph）。</p>
-<p>我们可以从图中容易发现：</p>
-<ul>
-<li>赫拉克勒斯（Hercules）的父亲是丘比特（Jupiter，对应希腊神话中的宙斯），母亲是阿尔克墨涅（Alcmene）；</li>
-<li>阿尔克墨涅（Alcmene）是一个凡人（human），所以赫拉克勒斯（Hercules）是一个半神（demigod）；</li>
-<li>尼普顿（Neptune，海神）住在海洋中，因为喜欢海浪的声音。</li>
-<li>……</li>
-</ul>
-<p>然后我们就很容易理解以下概念：</p>
-<ul>
-<li>节点拥有一个（也可以是多个）标签（label），例如神（god）、半神（demigod）、凡人（human）等等；</li>
-<li>节点可以拥有很多属性（property），例如姓名、年龄等等，以键值对（key-value pair）的形式表示，并且属性值也可以是键值对；</li>
-<li>边也有标签，标签可以是“住在”、“是他的父亲”等等；</li>
-<li>边有方向，不同图数据库对方向的约束可能不一样，例如JanusGraph只接受单向边，如果需要表达双向关系，则需要再添加一条反向的边；</li>
-<li>边也有属性，例如某人“住在”某地的关系上存在“原因”的属性；</li>
-</ul>
-<p>当然，实际场景中的图要比上图复杂的多的多，图数据库就是处理这种数据的工具。</p>
-<h1 id="为什么需要图数据库"><a href="#为什么需要图数据库" class="headerlink" title="为什么需要图数据库"></a>为什么需要图数据库</h1><p>其实这个问题可以这么问：为什么传统关系型数据库不能很好处理图？</p>
-<p>有人曾做过一个测试：在一个包含100w人，每人约有50个朋友的社交网络中找到最大深度为5的朋友的朋友。下图为图数据库Neo4J和关系型数据库在寻找扩展朋友时的性能对比。</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Neo4j_vs_Relation_DBMS.jpg" alt="Neo4j vs Relation DBMS"></p>
-<p>从图中可以发现，当我们需要寻找朋友的朋友（深度为 2）时，关系型数据库（RDBMS）与 Neo4j 性能差距并不明显；深度为 4 时，关系型数据库需要近半个小时才能返回结果；当深度到达 5 时，关系型数据库已无法返回结果。从中我们可以很容易看出，对于图数据库来说，数据量越大，查询需要涉及的关系越复杂，图数据库的性能优势越大。</p>
-<h2 id="为什么关系型数据库不行"><a href="#为什么关系型数据库不行" class="headerlink" title="为什么关系型数据库不行"></a>为什么关系型数据库不行</h2><p>我们来复盘一下上面的实验。对于关系型数据库来说，朋友的朋友意味着两张表的 join， 会很容易产生笛卡尔积的中间数据，数据量随着深度呈幂增长。这就是为什么性能随着查询深度，下降如此之快。</p>
-<p>再举一个例子，假设刚才我们在寻找“ A 的朋友是谁”，我们的数据表针对此类查询进行了特殊表设计，查询一般会比较快。但是，如果我们需要查询“谁的朋友是 A ”，我们可能需要遍历整个关系表，查询效率就会瞬间降低。</p>
-<p>同样的，在商品数据库中，我们查询某个客户买了哪些商品通常效率比较高，但是我们要查询”那些客户买了这个商品”甚至是“有哪些买了这个商品的客户也买了那个商品”的这种多层关系的时候，关系型数据库通常就显得力不从心了。实际上，关系型数据库在处理反向查询以及多层次关系查询的时候通常开销较大。</p>
-<h2 id="为什么图数据库可以"><a href="#为什么图数据库可以" class="headerlink" title="为什么图数据库可以"></a>为什么图数据库可以</h2><p>原理上的解释，看完下个章节，可能你就会有答案。这里，先介绍下图数据库的特点：</p>
-<ol>
-<li><p>使用图的方式表达现实世界很多事物更为直接、易于理解，自然也易于建模。你可以喜欢一部电影，也可以和好朋友建立密切的关系，也可以创作一些文章，均可以用节点和边的方式表达；</p>
-</li>
-<li><p>图数据库可以高效插入大量数据。从应用的角度来说，知识图谱、社交关系、风控关系等，数据量在亿级别。图数据库在十亿级别的数据量时，能保持较好的性能；</p>
-</li>
-<li><p>图数据库可以高效进行关联查询、数据插入，并且提供了针对图查询的语言。我们已在上一小结说明，关系型数据库针对关联查询效率下降严重。图数据库通过针对性的优化，在数据建模，存储形式上支持高效的关联查询。图模型提供了固有的索引数据结构，因此它不需要为给定条件的查询加载或接触不相关的数据。目前比较主流的图查询语言是 Gremlin 和 Cypher，都可以用模式匹配的方式，去寻找图上的路径。例如，使用 JanusGraph 寻找我的 2 度朋友关系：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g.V().has(&apos;name&apos;,&apos;gupeng&apos;).out(&apos;friend&apos;).out(&apos;friend&apos;)</span><br></pre></td></tr></table></figure>
-<p>使用 Cypher 寻找我和我的好朋友的共同好友：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person &#123;name:&apos;gupeng&apos;&#125;) -[:KNOWS]-&gt; (b) -[:KNOWS]-&gt; (c)</span><br><span class="line">(a) -[:KNOWS]-&gt; (c)</span><br><span class="line">RETURN b,c</span><br></pre></td></tr></table></figure>
-<p>并且，在查询节点之间的关系通常可以做到常数级别。</p>
-</li>
-<li><p>图数据库提供专业的分析算法或者工具。分析算法例如 PageRank、ShortestPath 等等。大部分图数据库也会提供可视化的图显示，使得查询和分析十分直观。</p>
-</li>
-</ol>
-<h2 id="图数据库应用"><a href="#图数据库应用" class="headerlink" title="图数据库应用"></a>图数据库应用</h2><p>图数据库拥有广泛的适用场景，因为实体和关系的建模方式能很好地抽象自然和社会的很多事物。下面举例最常使用的场景。</p>
-<ol>
-<li><p>社交网络</p>
-<p>在社交网络中使用图数据库可以方便得识别人/群组和他们交流的事物之间的直接或间接的联系，使用户能够高效地对其他人或事物进行打分、评论、发现彼此存在的关系和共同关系的事情。可以更加直观得了解社交网络中人与人之间如何互动、如何关联、如何以群组的形式来做事情或选择。</p>
-</li>
-<li><p>实时推荐</p>
-<p>推荐算法通过用户的购买、生产、消费、打分或评论等行为，建立人和商品之间的联系。推荐算法可以识别出某些资源会吸引特定个人或群体，或者某些个人或群体可能对特定资源感兴趣。用图数据库存储和查询这些数据使得应用程序可以为最终用户呈现实时结果，反映数据最新的变化，进行实时的商品推荐。</p>
-</li>
-<li><p>知识图谱</p>
-<p>最早起源于Google Knowledge Graph。知识图谱本质上是一种语义网络 。其结点代表实体（entity）或者概念（concept），边代表实体/概念之间的各种语义关系。所以知识图谱可以很好地用图来表达。建立知识图谱，可以为后续应用提供基础，例如问答系统，商品推荐，信息检索等等。</p>
-</li>
-<li><p>反欺诈和风控</p>
-<p>例如，近年来的消费金融行业快速发展，相比于传统商业银行，拥有自己独特的优势：填写字段少、在线操作、审核速度快、放贷及时。这类申请人群通常因缺乏征信信息而给消费金融企业带来了巨大的信用和欺诈风险。而图分析结合传统机器学习算法，可以在有限信用记录甚至是“零”信用记录下进行更准确的风险控制和欺诈识别。</p>
-</li>
-</ol>
-<p>此外，图数据库产品还广泛用在地理空间和物流应用，路由计算，电商和社交类产品防机器人作弊，网络和数据中心管理，授权和访问控制等领域。</p>
-<h1 id="数据模型-amp-图计算引擎"><a href="#数据模型-amp-图计算引擎" class="headerlink" title="数据模型 &amp; 图计算引擎"></a>数据模型 &amp; 图计算引擎</h1><p>我们从使用图数据库的角度入手，一个完善的图数据系统至少应该包括图存储和查询，图处理和计算，数据导入导出，可能还有可视化，对于商业化产品还需要高可用及容灾备份。下面对主要部分进行介绍。</p>
-<h2 id="图存储-amp-数据模型"><a href="#图存储-amp-数据模型" class="headerlink" title="图存储 &amp; 数据模型"></a>图存储 &amp; 数据模型</h2><p>图数据如何存储图，对存储效率和查询效率都至关重要。我们称数据库表达数据的方式为图模型（Data Model），是一种对图的建模方式。</p>
-<p>目前使用的图模型有3种，分别是属性图（Property Graph）、资源描述框架（RDF，Resource Description Framework）和超图（HyperGraph）。</p>
-<ol>
-<li><p><strong>属性图（Property Graph）</strong>：目前主流图数据库选择的数据模型，更确切的说是带标签的属性图（Labeled-Property Graph）。除了图所共有节点和边的概念，我们已经在上面介绍了属性和标签的概念。我们可以用一个属性图来表达属性图各元素的关系：</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/graph_of_property_graph_model.jpg" alt="graph of property graph model"></p>
-</li>
-<li><p><strong>资源描述框架（RDF，Resource Description Framework）</strong>：在一个 RDF 中，增加的信息都以单独的节点表示。RDF由节点和边组成，节点表示实体/资源或者属性，边则表示了实体和实体之间的关系以及实体和属性的关系。相较于属性图，对属性的处理方式不一样。例如，如果要为某个”人“节点增加”name“属性，对于属性图来说，在这个”人“的”name“属性上设置名字，而在 RDF 中，直接通过一条”hasName“的边指向了设置名字。RDF 形式上表示为SPO（Subject - Predicte - Object）三元组，有时候也称为一条语句（Statement）。RDF 比较多地被使用在知识图谱中，那我们也通常称一条语句为一条知识。许多图数据库是基于RDF实现的，包括：AllegroGraph，Virtuoso，Blazegraph和Stardog。</p>
-</li>
-<li><p><strong>超图（HyperGraph）</strong>：不同于属性图和 RDF，超图的边可以连接任意数量（不能为 0）的节点，超图的边又称为超边（hyperedges）。如图是一个典型的超图：</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190421%20Introduction%20to%20Graph%20Database/Hypergraph_example.png" alt="Hypergraph example"></p>
-</li>
-</ol>
-<p>主流的开源图数据库 Neo4j 和 JanusGraph 都采用属性图的数据模型。不同的是，Neo4j 使用原生图存储，JanusGraph 使用非原生图存储，将图结构序列化存储到基于 BigTable Model 的数据库（例如 Cassandra，HBase）中。原生图存储为存储和使用图做了更多的优化，遍历查询性能更高，但非遍历类的查询则不占优势，且为了全局搜索还会占用大量内存。</p>
-<h2 id="图查询和图计算-OLTP-和-OLAP"><a href="#图查询和图计算-OLTP-和-OLAP" class="headerlink" title="图查询和图计算 / OLTP 和 OLAP"></a>图查询和图计算 / OLTP 和 OLAP</h2><p>图查询和图计算都是对图的遍历。图数据库主要提供两种与遍历图的方式：OLTP （Online Transaction Processing）和 OLAP （Online Analytical Processing）。</p>
-<blockquote>
-<ul>
-<li>OLTP：实时返回，涉及少量数据，随机的数据访问，串行运行，用于查询，偏向深度优先的计算引擎，不需要太大的内存；</li>
-<li>OLAP：长时间运行，涉及几乎整个图，串行地访问数据，并行运行，批量处理，偏向广度优先的计算引擎，需要更大的内存。</li>
-</ul>
-</blockquote>
-<p>图查询指支持对图数据模型的增、删、改、查（CRUD）方法，更关注 OLTP。<strong>有的图数据库也继承了少量的图计算能力，但真正的大型系统还是需要单独的计算框架</strong>。</p>
-<p>图计算引擎技术，偏重于全局查询，通常都对与批处理大规模数据做过优化。只有一部分图计算引擎有自己的存储层，其他的都只关注与如果处理外部传入的数据，然后返回结果到其他地方保存。图计算引擎，或者说图的并行计算框架，包括 Google 的 Pregel，基于 Spark 的 GraphX，Apache 下的 Giraph / HAMA 以及 GraphLab，其中Giraph 是 Pregel 的开源实现。</p>
-<h1 id="图数据库产品"><a href="#图数据库产品" class="headerlink" title="图数据库产品"></a>图数据库产品</h1><h2 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h2><p>Neo4j 是老牌的图数据代表（2007）。其功能强大，性能也不错，单节点的服务器可承载上亿级的节点和关系，单节点性能不够时也可进行分布式集群部署。</p>
-<p>Neo4j有自己的后端存储，不必如同 JanusGraph 等一样依赖另外的数据库存储。Neo4j 在每个节点中存储了每个边的指针，因而遍历时效率相当高。Neo4j分为社区版和企业版，社区版功能受限，另外其提供可视化的客户端感觉很不错。</p>
-<p>据neo4j的中国合作方的社区中描述，主要区别如下：</p>
-<p>1、容量：社区版最多支持 320 亿个节点、320 亿个关系和 640 亿个属性，而企业版没有这个限制；</p>
-<p>2、并发：社区版只能部署成单实例，不能做集群。而企业版可以部署成高可用集群或因果集群，从而可以解决高并发量的问题；</p>
-<p>3、容灾：由于企业版支持集群，部分实例出故障不会影响整个系统正常运行；</p>
-<p>4、热备：社区版只支持冷备份，即需要停止服务后才能进行备份，而企业版支持热备，第一次是全量备份，后续是增量备份；</p>
-<p>5、性能：社区版最多用到 4 个内核，而企业能用到全部内核，且对性能做了精心的优化；</p>
-<p>6、支持：企业版客户能得到 5X10 电话支持（Neo4j 美国电话、邮件，微云数聚电话、微信、邮件）；</p>
-<p>考虑到这些限制，要选开源免费大容量分布式的图数据库的可以跳过了，研究图论及小型应用或不差钱的项目则选其的支持服务则另当别论。另外 Neo4j 的协议为 GPLv3，这个也不适合选用。</p>
-<h2 id="JanusGraph"><a href="#JanusGraph" class="headerlink" title="JanusGraph"></a>JanusGraph</h2><p>JanusGraph（2017） 基于 Titan（2012）发展而来，包含其所有功能，采用 Tikerpop 的 Gremlin 图查询语言，有单独的后端存储，支持 Cassandra / HBase 等做存储，支持 Solr / ElasticSearch / Lucence 等做图索引。支持Spark GraphX / Giraph等图分析计算引擎及Hadoop分布式计算框架。原生支持集成了 Tinkerpop 系列组件：Gremlin 查询语言，Gremlin-Server 及 Gremlin applications。</p>
-<p>采用很友好的 Apache2.0 协议，支持对接可视化组件如 Cytoscape，Gephi plugin for Apache TinkerPop，Graphexp，KeyLines by Cambridge Intelligence，Linkurious 等。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>总体来说，图数据和图分析还处在方兴未艾的阶段，很多现有的产品都相当的“实验室”，性能提升空间十分巨大。图数据库的价值，还需要更多的开发工程师、数据分析师来实现。</p>
-<p>关于图数据库的未来，引用一段知乎作者 bop 的一段话：</p>
-<blockquote>
-<p>图的本质难题是什么？是数据的高度关联带来的严重的随机访问。所以，传统的关系型数据库解决不了这个问题，因为他们仍然是面向磁盘优化，尽可能利用磁盘顺序读写的优势。Neo4j 这种数据结构在数据落到磁盘上的时候，随机访问比关系型数据库多更多，性能衰减想当厉害。那么分布式 NoSQL 的路子呢？网络是瓶颈。完美的最小割图分区算法是 NP 难题，而且在数据写入的情况下还要面临动态调整的难题。如果使用naive的分区算法，网络通讯的开销是想当大的。</p>
-<p>所以，个人浅见，只有靠新硬件来解决问题。更廉价的大内存、NVRAM、RDMA高速网络、随机读写更强的SSD磁盘、有硬件事务支持的CPU等。</p>
-</blockquote>
-<p>技术世界就是这样，封装封装再封装，重构重构造新轮。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li>图数据库入门概览，作者：AirCloud，<a href="https://zhuanlan.zhihu.com/p/32856981" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32856981</a></li>
-<li>一起学图数据库之一：图数据库介绍，作者：王二铁，<a href="https://zhuanlan.zhihu.com/p/32857155" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32857155</a></li>
-<li>一起学图数据库之三：图数据库市场格局，作者：Yu Xu，翻译：王二铁，<a href="https://zhuanlan.zhihu.com/p/33112533" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33112533</a></li>
-<li>知乎答案：类似 Neo4j 这样的图数据库在国内会兴起么？，作者 javeme，<a href="https://www.zhihu.com/question/19999933/answer/550019788" target="_blank" rel="noopener">https://www.zhihu.com/question/19999933/answer/550019788</a></li>
-<li>图数据库基础，作者：温正湖，<a href="https://zhuanlan.zhihu.com/p/50171330" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/50171330</a></li>
-<li>20180818图数据库概览，作者：朱金华，<a href="https://zhuanlan.zhihu.com/p/42351039" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/42351039</a></li>
-<li>知乎答案：图论数据库未来的发展方向？，作者：bop，<a href="https://www.zhihu.com/question/31819867/answer/237043857" target="_blank" rel="noopener">https://www.zhihu.com/question/31819867/answer/237043857</a></li>
-<li>WIKIPEDIA Graph_database， <a href="https://en.wikipedia.org/wiki/Graph_database" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Graph_database</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jerryroc.github.io/2019/04/20/Hello-World/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GuPeng">
-      <meta itemprop="description" content="Everything About Data Science.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Peng's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/20/Hello-World/" class="post-title-link" itemprop="url">Hello World</a>
-              
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
+              <a href="/2019/04/21/Introduction-to-Graph-Database/" rel="next" title="Introduction to Graph Database">
+                <i class="fa fa-chevron-left"></i> Introduction to Graph Database
+              </a>
             
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-04-20 21:44:44" itemprop="dateCreated datePublished" datetime="2019-04-20T21:44:44+08:00">2019-04-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-06 16:40:35" itemprop="dateModified" datetime="2019-05-06T16:40:35+08:00">2019-05-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/index/" itemprop="url" rel="index"><span itemprop="name">index</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>欢迎来到我的博客，我来自 Teradata，是一名 Data Scientist。作为数据科学从业者，深知数据库知识、计算机知识、数据分析能力，当然还有算法知识，都是不可或缺的。</p>
-<p>博客会针对这四个方面的内容，记录工作中的探索和心得。当然，我也会关注”如何快速成长为数据科学家“这一主题，提供一系列的课程，但这不会是本博客的主要内容。</p>
-<h3 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h3><p>所有文章将可以在此页面进行索引和跳转，新的文章也可能在此页面进行预告~</p>
-<p><strong>Yes&amp;NoSQL</strong></p>
-<p>主要关注数据库知识，了解㓊类型的数据是如何存储和取用的。包括但不限于传统关系型数据库的原理和使用、图片等非结构化数据如何存储、有什么好的工具提供完整的平台解决方案；</p>
-<ol>
-<li><a href="https://jerryroc.github.io/2019/04/21/Introduction-to-Graph-Database/">图数据库：概览</a></li>
-<li>图数据库：JanusGraph 简介（TODO）</li>
-</ol>
-<p><strong>GeekStyle</strong></p>
-<p>主要关注计算机知识，对于一个 Data Scientist 来说，我会更关注如何高效工作。包括但不限于如何选择生产工具、如何自动化建立机器学习模型、如何高效利用多台计算机建立模型；</p>
-<ol>
-<li>开源 AI 分布式框架 Ray （TODO）</li>
-</ol>
-<p><strong>AnalyzeAnything</strong></p>
-<p>主要关注数据分析、数据挖掘，了解如何让数据说话，让数据真正产生价值。包括但不限于如何可视化你的数据、如何进行数学建模的过程、怎样去解决你的业务问题；</p>
-<ol>
-<li>可视化工具概览（TODO）</li>
-</ol>
-<p><strong>Algorithm</strong></p>
-<p>关注算法知识，了解最前沿的算法和工具。包括但不限于算法的原理和案例、如何理解算法的超参和算的局限性。</p>
-<ol>
-<li><a href="https://jerryroc.github.io/2019/05/04/Introduction-to-Graph-Algorithms/">图算法：概览</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1116,14 +705,22 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -1143,8 +740,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1253,6 +859,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图算法-amp-图分析"><span class="nav-number">1.</span> <span class="nav-text">图算法 &amp; 图分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图基础知识"><span class="nav-number">2.</span> <span class="nav-text">图基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连通图与非连通图"><span class="nav-number">2.1.</span> <span class="nav-text">连通图与非连通图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未加权图与加权图"><span class="nav-number">2.2.</span> <span class="nav-text">未加权图与加权图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图与无向图"><span class="nav-number">2.3.</span> <span class="nav-text">有向图与无向图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非循环图和循环图"><span class="nav-number">2.4.</span> <span class="nav-text">非循环图和循环图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图算法"><span class="nav-number">3.</span> <span class="nav-text">图算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#路径搜索算法"><span class="nav-number">3.1.</span> <span class="nav-text">路径搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DFS-amp-BFS"><span class="nav-number">3.1.1.</span> <span class="nav-text">DFS &amp; BFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最短路径"><span class="nav-number">3.1.2.</span> <span class="nav-text">最短路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小生成树"><span class="nav-number">3.1.3.</span> <span class="nav-text">最小生成树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机游走"><span class="nav-number">3.1.4.</span> <span class="nav-text">随机游走</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中心性算法"><span class="nav-number">3.2.</span> <span class="nav-text">中心性算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Degree-Centrality"><span class="nav-number">3.2.1.</span> <span class="nav-text">Degree Centrality</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Closeness-Centrality"><span class="nav-number">3.2.2.</span> <span class="nav-text">Closeness Centrality</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Betweenness-Centrality"><span class="nav-number">3.2.3.</span> <span class="nav-text">Betweenness Centrality</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PageRank"><span class="nav-number">3.2.4.</span> <span class="nav-text">PageRank</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社群发现算法"><span class="nav-number">3.3.</span> <span class="nav-text">社群发现算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Measuring-Algorithm"><span class="nav-number">3.3.1.</span> <span class="nav-text">Measuring Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Components-Algorithm"><span class="nav-number">3.3.2.</span> <span class="nav-text">Components Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Label-Propagation-Algorithm"><span class="nav-number">3.3.3.</span> <span class="nav-text">Label Propagation Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Louvain-Modularity-Algorithm"><span class="nav-number">3.3.4.</span> <span class="nav-text">Louvain Modularity Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1412,6 +1035,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -1427,6 +1054,8 @@
 
   
 
+
+  
 
 
   
