@@ -403,7 +403,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-06 16:38:49" itemprop="dateModified" datetime="2019-05-06T16:38:49+08:00">2019-05-06</time>
+                <time title="Modified: 2019-05-14 13:25:45" itemprop="dateModified" datetime="2019-05-14T13:25:45+08:00">2019-05-14</time>
               
             
           </span>
@@ -577,7 +577,7 @@
 <p><img src="https://github.com/JerryRoc/graphs/raw/master/20190504%20Introduction%20to%20Graph%20Algorithms/Triangle_Count_and_Clustering_Coefficient_for_Node_u.png" alt="Triangle Count and Clustering Coefficient for Node u" title="Triangle Count and Clustering Coefficient for Node u"></p>
 <p><strong>全局聚类系数</strong>是局部聚类系数的归一化求和。</p>
 <p>当需要计算一个组的稳定性或者聚类系数时，我们可以使用三角计数。三角计数在社交网络分析中有广泛的应用，通航被用来检测社区。聚类系数可以快速评估特定组或整个网络的内聚性。这些算法可以共同用于特定网络结构的寻找。例如，探索网页的主题结构，基于网页之间的相互联系，检测拥有共同主题的 “网页社群”。</p>
-<h3 id="Components-Algorithm"><a href="#Components-Algorithm" class="headerlink" title="Components Algorithm"></a>Components Algorithm</h3><p><strong>强关联部件（Strongly Connected Components，简称 SCC）</strong>算法寻找有向图内的一组一组节点，每组节点可以通过关系怀 <em>互相</em> 访问。在 “Community Detection Algorithms” 的图中，我们可以发现，每组节点内部不需要直接相连，只要通过路径访问即可。</p>
+<h3 id="Components-Algorithm"><a href="#Components-Algorithm" class="headerlink" title="Components Algorithm"></a>Components Algorithm</h3><p><strong>强关联部件（Strongly Connected Components，简称 SCC）</strong>算法寻找有向图内的一组一组节点，每组节点可以通过关系 <em>互相</em> 访问。在 “Community Detection Algorithms” 的图中，我们可以发现，每组节点内部不需要直接相连，只要通过路径访问即可。</p>
 <p><strong>关联部件（Connected Components）</strong>算法，不同于 SCC，组内的节点对只需通过一个方向访问即可。</p>
 <p>关联类算法作为图分析的早期算法，用以了解图的结构，或确定可能需要独立调查的紧密集群十分有效。对于推荐引擎等应用程序，也可以用来描述组中的类似行为等等。许多时候，算法被用于查找集群并将其折叠成单个节点，以便进一步进行集群间分析。对于我们来说，先运行以下关联类算法查看图是否连通，是一个很好的习惯。</p>
 <h3 id="Label-Propagation-Algorithm"><a href="#Label-Propagation-Algorithm" class="headerlink" title="Label Propagation Algorithm"></a>Label Propagation Algorithm</h3><p>标签传播算法（Label Propagation Algorithm，简称 LPA）是一个在图中快速发现社群的算法。在 LPA 算法中，节点的标签完全由它的直接邻居决定。算法非常适合于半监督学习，你可以使用已有标签的节点来种子化传播进程。</p>
