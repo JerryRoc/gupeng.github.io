@@ -105,8 +105,8 @@
 <meta property="og:description" content="编者按：统计学家最爱的 R 与 “A graph is worth a thousand words” 的可视化工具。本期博文，就让我们了解一下 R 语言如何进行数据可视化。  “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/baidu_map_travel.png">
-<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/graphics.png" graphics"">
-<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/lattice.png" lattice"">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/graphics.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/lattice.png">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/ggplot2_1.png">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/ggplot2_2.png">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/ggplot2_3.png">
@@ -119,7 +119,7 @@
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/R_Shiny.png">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/iris_1.png">
 <meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/iris_2.png">
-<meta property="og:updated_time" content="2019-05-21T10:05:38.496Z">
+<meta property="og:updated_time" content="2019-05-21T10:08:38.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R语言：可视化概览">
 <meta name="twitter:description" content="编者按：统计学家最爱的 R 与 “A graph is worth a thousand words” 的可视化工具。本期博文，就让我们了解一下 R 语言如何进行数据可视化。  “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey">
@@ -400,7 +400,7 @@
                 
               
 
-              <time title="Created: 2019-05-21 17:22:30 / Modified: 18:05:38" itemprop="dateCreated datePublished" datetime="2019-05-21T17:22:30+08:00">2019-05-21</time>
+              <time title="Created: 2019-05-21 17:22:30 / Modified: 18:08:38" itemprop="dateCreated datePublished" datetime="2019-05-21T17:22:30+08:00">2019-05-21</time>
             
 
             
@@ -490,10 +490,10 @@
 <h2 id="graphics包"><a href="#graphics包" class="headerlink" title="graphics包"></a>graphics包</h2><p>基础绘图包graphics，在安装R时默认安装，启动R时默认加载。它囊括了常用的标准统计图形，如条形图，饼图，直方图，箱线图，散点图等。在R里运行：</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">demo(graphics)</span><br></pre></td></tr></table></figure>
 <p>会给出一些常用图形的样例（如下图），及生成这些图形的代码。</p>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/graphics.png&quot;graphics&quot;" alt="graphics"></p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/graphics.png" alt="graphics" title="graphics"></p>
 <h2 id="lattice包"><a href="#lattice包" class="headerlink" title="lattice包"></a>lattice包</h2><p>在使用之前，需要先加载lattice包。lattice包提供了大量新的绘图类型、默认颜色、图形排版等优化。同时，它还支持“条件多框图”—— 如下图，在不同月份（Month），观察臭氧浓度（Ozone）与气温（Temp）之间的关系。这里，“月份”就是我们所说的条件，条件多框图可以让我们更清楚地看到Ozone与Temp的关系是否受月份的影响而发生变化。</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(lattice)</span><br><span class="line">xyplot(Temp ~ Ozone |factor(Month),</span><br><span class="line">	data = airquality,</span><br><span class="line">	main=<span class="string">"Temp(F) vs Ozone(ppb) by Month"</span>,</span><br><span class="line">	layout=c(<span class="number">5</span>,<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/lattice.png&quot;lattice&quot;" alt="lattice"></p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190521%20R%20Visualization/lattice.png" alt="lattice" title="lattice"></p>
 <h2 id="ggplot2包"><a href="#ggplot2包" class="headerlink" title="ggplot2包"></a>ggplot2包</h2><p>ggplot2由Hadley Wickham根据Grammar of Graphics（图形的语法）中提出的理论而开发。它将绘图视为一种映射，即从数学空间映射到图形元素空间。它的绘图方式类似于我们平时生活中画图，先创建一个画布，然后一层层往上叠加信息。ggplot2是R中最常用到同时也是功能最强大的绘图包（Python中也有了ggplot2的实现——plotnine，你只需要对R语言中的ggplot2代码稍作修改，就能直接在Python中运行）。</p>
 <p>我们用ggplot2中自带的数据diamonds为例来描述绘图过程：绘制钻石克拉数（carat）与价格（price）的关系，同时将纯度（clarity）作为颜色变量。在代码中，carat, price, clarity分别被映射到了x轴，轴y及color。</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(ggplot2)</span><br><span class="line">ggplot(data=diamonds, mappings=aes(x=carat, y=price))+</span><br><span class="line">	geom_point(aes(color=clarity))</span><br></pre></td></tr></table></figure>
