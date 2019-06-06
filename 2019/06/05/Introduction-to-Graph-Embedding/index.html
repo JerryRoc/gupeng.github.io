@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Embedding 是深度学习十分重要的“基本操作”，不论是 NLP，搜索排序，还是推荐系统，Embedding 都扮演着重要的角色。本文借由 Graph Embedding 切入，不用一个公式，带领大家从 Word2Vec 到 DeepWalk，再到 Node2Vec，你也能成为算法大神~  之前的博文，给大家介绍了很多图算法，它们看起来很酷炫，却不知道如何使用？本期我们关注 Graph Em">
+<meta name="keywords" content="embedding,graph embedding,recommendation,deepwalk,node2vec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graph Embedding：深度学习推荐系统的&quot;应知应会&quot;">
+<meta property="og:url" content="https://jerryroc.github.io/2019/06/05/Introduction-to-Graph-Embedding/index.html">
+<meta property="og:site_name" content="Peng&#39;s Blog">
+<meta property="og:description" content="Embedding 是深度学习十分重要的“基本操作”，不论是 NLP，搜索排序，还是推荐系统，Embedding 都扮演着重要的角色。本文借由 Graph Embedding 切入，不用一个公式，带领大家从 Word2Vec 到 DeepWalk，再到 Node2Vec，你也能成为算法大神~  之前的博文，给大家介绍了很多图算法，它们看起来很酷炫，却不知道如何使用？本期我们关注 Graph Em">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/word2vec_country_and_capital_vectors_projected_by_pca.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_item_graph.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/word2vec_cbow_and_skip_gram.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_algorithm.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_overview.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_result.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/line_toy_example.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/line_result.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_bfs_dfs.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_random_walk.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_result.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_graph_embedding_overview.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_cold_start_example.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_embedding_framework.png">
+<meta property="og:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_online_ctrs.png">
+<meta property="og:updated_time" content="2019-06-06T05:37:23.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Graph Embedding：深度学习推荐系统的&quot;应知应会&quot;">
+<meta name="twitter:description" content="Embedding 是深度学习十分重要的“基本操作”，不论是 NLP，搜索排序，还是推荐系统，Embedding 都扮演着重要的角色。本文借由 Graph Embedding 切入，不用一个公式，带领大家从 Word2Vec 到 DeepWalk，再到 Node2Vec，你也能成为算法大神~  之前的博文，给大家介绍了很多图算法，它们看起来很酷炫，却不知道如何使用？本期我们关注 Graph Em">
+<meta name="twitter:image" content="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/word2vec_country_and_capital_vectors_projected_by_pca.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://jerryroc.github.io/2019/06/05/Introduction-to-Graph-Embedding/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Graph Embedding：深度学习推荐系统的"应知应会" | Peng's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Peng's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jerryroc.github.io/2019/06/05/Introduction-to-Graph-Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GuPeng">
+      <meta itemprop="description" content="Everything About Data Science.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Peng's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Graph Embedding：深度学习推荐系统的"应知应会"
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-05 09:37:23" itemprop="dateCreated datePublished" datetime="2019-06-05T09:37:23+08:00">2019-06-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-06 13:37:23" itemprop="dateModified" datetime="2019-06-06T13:37:23+08:00">2019-06-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/06/05/Introduction-to-Graph-Embedding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/06/05/Introduction-to-Graph-Embedding/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Embedding 是深度学习十分重要的“基本操作”，不论是 NLP，搜索排序，还是推荐系统，Embedding 都扮演着重要的角色。本文借由 Graph Embedding 切入，不用一个公式，带领大家从 Word2Vec 到 DeepWalk，再到 Node2Vec，你也能成为算法大神~</p>
+</blockquote>
+<p>之前的博文，给大家介绍了很多图算法，它们看起来很酷炫，却不知道如何使用？本期我们关注 Graph Embedding，不但可以“实践”很多图算法，更可以快速了解 Embedding 在深度学习推荐系统中的使用，从 Word2Vec 到 DeepWalk，从 LINE 到 Node2Vec，希望能收获满满~ 另外，推荐一个知乎专栏：王喆的机器学习笔记，关于 Graph Embedding，专栏用了几篇文章相对系统地进行了说明，阅读之后受益很多。</p>
+<p>本文不含公式，需要基本的图算法基础，包括 Random Walk、BFS、DFS 等。如果这些名词对你来说还很陌生，建议阅读<a href>前序博文</a>。</p>
+<h1 id="Embedding-is-all-you-need"><a href="#Embedding-is-all-you-need" class="headerlink" title="Embedding is all you need"></a>Embedding is all you need</h1><p>允许我做一次标题党，Embedding 必须是深度学习中的“基本操作”。不论是 NLP（Normal Language Processing，自然语言处理），搜索排序，还是推荐系统，或者 CTR （Click-Through-Rate，点击通过率）模型，Embedding 都扮演着不可或缺的角色。</p>
+<p><strong>什么是 Embedding？</strong></p>
+<p>Embedding 在数学上表示一个映射关系， F: X -&gt; Y， 也就是一个函数。函数具有两个性质：injective 和 structure-preserving。Injective，即我们所说的单射函数，对于每个 Y 只有唯一的 X 对应，反之亦然；structure-preserving，结构保存，比如在 X 所属的空间上 X1 &lt; X2，那么映射后在 Y 所属空间上 Y1 &lt; Y2。</p>
+<p>简单点说，深度学习中，Embedding 特指用一个低维度向量表示一个实体，可以是一个词（Word2Vec），可以是一个物品（Item2Vec），亦或者网络关系中的节点（Graph Embedding）。</p>
+<p>Embedding 所获得的低维度向量具有一些特殊的性质。如下图，我们使用 Word2Vec 将单词映射（word embedding）到新的向量空间，获得单词的新的表达（word representation）。我们能从图中很容易得出：Embedding(Moscow) - Embedding(Russia) ≈ Embedding(Tokyo) - Embedding(Japan)，说明 Embedding 之后向量可以进行计算。并且，Embedding 之后，距离相近的向量对应的实体有相近的含义，比如 Embedding (Russia) 和 Embedding (Japan) 之间的距离就会很接近，但 Embedding (Russia) 和 Embedding (Tokyo) 的距离就会远一些。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/word2vec_country_and_capital_vectors_projected_by_pca.png" alt="country and capital vectors projected by pc" title="country and capital vectors projected by pc"></p>
+<p>可见，Embedding 拥有很多优点：得到的向量表达维度更低，并且表达了实体间内在的关系。下面以商品推荐为例，进一步解释。假设我们有千万级别的商品，我们通常使用 One-Hot 编码数字化地代表，则能够得到千万个向量，每个向量代表一种商品，并且每个向量都拥有千万级别的维度。向量只有一位是 1，其他位均为 0，信息量十分“稀疏”。此时，任何商品之间的距离都是一样的。并且，由于深度学习的特点以及工程方面的原因，深度学习并不善于处理稀疏特征的向量。相反，Embedding 之后，千万级别的维度可以缩小到自定义的维度大小（例如1000）。变成向量之后的商品，可以直接通过计算向量相似度，寻找相似的商品，直接推荐给客户。</p>
+<p>这些优点带来的好处是显著的，Embedding 主要的三个应用方向：</p>
+<ul>
+<li>在深度学习网络中使用 Embedding 层，将高维稀疏特征向量转换成低维稠密特征向量，从而减少后续模型参数量，后续模型可以是深度学习模型，或者传统的机器学习模型；</li>
+<li>作为预训练技术，直接使用别人训练好的 Embedding 向量，与其他特征向量一同输入后续模型进行训练，例如 Word2Vec；</li>
+<li>通过计算用户和物品的 Embedding 相似度，Embedding 可以直接作为推荐系统或计算广告系统的召回层或者召回方法之一，例如 Youtube 推荐系统。</li>
+</ul>
+<p><strong>什么是 Graph Embedding？</strong></p>
+<p>Graph Embedding 用低维、稠密、实值的向量表示网络中的节点。目前，Graph Embedding 已经是推荐系统、计算广告领域非常流行的做法，并且在实践后取得了非常不错的线上效果。</p>
+<p>为什么能有这样的效果呢？</p>
+<p>我们很容易理解（如果有困难，可以尝试阅读下一章节），Word2Vec 通过序列（sequence）式的样本：句子，学习单词的真实含义。仿照 Word2Vec 思想而生的 Item2Vec 也通过商品的组合去生成商品的 Embedding，这里商品的组合也是序列式的，我们可以称他们为“Sequence Embedding”。然而，在更多场景下，数据对象之间更多以图/网络的结构呈现。例如下图，由淘宝用户行为数据生成的物品关系图（Item Graph）：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_item_graph.png" alt="item graph" title="item graph"></p>
+<p>从上图的例子中，我们已经能触碰到一些 Graph Embedding 的本质。Graph Embedding 之所以能好于 “Sequence Embedding”，是因为 Graph Embedding 能够生成一些“不存在”的序列。例如，上图数据中没有这样的用户行为数据：<code>B-E-F</code>、<code>D-E-C</code>等等。但是在物品关系图中，我们有机会生成这样的序列。</p>
+<p><strong>Graph Embedding 常见的同义词</strong></p>
+<p>除了 Graph Embedding，我们还会经常看到 Network Embedding、Node Embedding、Graph Representation 或者 Network Representation Learning，这些名词可能在定义上会有差异，大部分时间，我们可以在特定场合将他们视为同义词。</p>
+<p>下面就让我们从 Word2Vec 开始，了解 Graph Embedding 吧~</p>
+<h1 id="Embedding-流行起点：Word2Vec"><a href="#Embedding-流行起点：Word2Vec" class="headerlink" title="Embedding 流行起点：Word2Vec"></a>Embedding 流行起点：Word2Vec</h1><p>Google 的 Tomas Mikolov 在 2013 年的两篇论文标志着 Word2Vec 的诞生，论文提出了 CBOW 和 Skip-gram 两种 Word2Vec 模型结构。下图是两种模型结构的架构图：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/word2vec_cbow_and_skip_gram.png" alt="CBOW and Skip-gram" title="CBOW and Skip-gram"></p>
+<p>CBOW 使用目标词周边的词来预测目标词，Skip-gram 使用目标词预测周边的词。两种架构差别不大，我们在 Embedding 中更多使用Skip-gram。图中输入输出均使用词向量，词向量初始随机赋值，随着预测任务的进行，词向量在迭代中慢慢优化，使得预测任务指标越来越好，而我们最终需要的是训练好的词向量。两种模型的训练数据均使用标准的自然语言语料，利用词与词的关系（也就是语料序列）去训练词向量。</p>
+<p>也就是说，<strong>只要我们找到词与词之间的关联关系，就能通过 Skip-gram 方法训练词的向量</strong>。</p>
+<p>Word2Vec 有很多技术细节，例如使用 Hierarchical Softmax（层序 Softmax） 和 Negative Sampling 来减少由于词汇空间过大带来的计算量，例如优化目标的设置等等等等。由于与主旨无关，本文不作介绍。（事实是网上可以找到太多博文，毫无重写一份的激情……）</p>
+<h1 id="Graph-Embedding-早期技术：DeepWalk"><a href="#Graph-Embedding-早期技术：DeepWalk" class="headerlink" title="Graph Embedding 早期技术：DeepWalk"></a>Graph Embedding 早期技术：DeepWalk</h1><p>Word2Vec 诞生之后，Embedding 的思想迅速从 NLP 领域扩散到几乎所有的机器学习领域。我们可以对语料序列中的词进行 Embedding，那么自然用户购买序列中的商品，或者用户观看序列中的电影，都可以进行 Embedding。这就是 Item2Vec。</p>
+<p>回顾上一节的重点：是<strong>词与词的关联关系实现了 Embedding 的过程</strong>。序列（sequence）是一种“一维”的关系，而图（graph）是一种“二维”的关系，同样可以进行 Embedding。然而，我们目前能进行 Embedding 的 “工具” 只有 Skip-gram，只能处理序列这样一维的关系输入。因此，我们需要在二维关系上进行 “采样”，采样的过程可以使用随机游走算法（Random Walk，我们已在前序博文中进行了介绍）。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_algorithm.png" alt="DeepWalk Algorithm" title="DeepWalk Algorithm"></p>
+<p><strong>DeepWalk 就是 Random Walk 与 Skip-gram 的组合。</strong>上图是 DeepWalk 算法伪代码，核心步骤 6 和 7 就是 Random Walk 与 Skip-gram。下图是算法流程示意：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_overview.png" alt="Overview of DeepWalk" title="Overview of DeepWalk"></p>
+<p>Random Walk 负责对图进行采样，获得<strong>图中节点与节点的共现关系</strong>，Skip-gram 从关系（也就是采样的序列）中训练节点的 Embedding 向量。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/deepwalk_result.png" alt="Result of DeepWalk" title="Result of DeepWalk"></p>
+<p>上述结果中，比较临近的节点再 Embedding 空间更为接近，且结构更为相似的节点，距离也更近。这就是网络节点的同质性（homophily）和结构性（structural equivalence），进一步的说明会在下一小节。</p>
+<p>所以，DeepWalk 以 Random Walk 的方式从网络中生成序列，进而转换成传统 word2vec 的方法生成 Embedding 向量。该算法可以视为 Graph Embedding 的 baseline 方法，用极小的代价完成从 word2vec 到 graph embedding 的转换和工程尝试。</p>
+<h1 id="DeepWalk-的改进：从-LINE-到-Node2Vec"><a href="#DeepWalk-的改进：从-LINE-到-Node2Vec" class="headerlink" title="DeepWalk 的改进：从 LINE 到 Node2Vec"></a>DeepWalk 的改进：从 LINE 到 Node2Vec</h1><p>DeepWalk 之后，比较重要的工作是微软亚洲研究院在 2015 年发布的 <strong>LINE（Large-scale Information Network Embedding）</strong>。阅读到这里，我们已经可以知晓，在网络上 “相似” 的节点，最终会拥有相似的 Embedding 向量。在 LINE 的论文中，定义了两种相似：</p>
+<p><strong>First-order proximity</strong>（1 阶相似度）：用于描述图中成对顶点之间的局部相似度，形式化描述为若节点之间存在直连边，则边的权重即为两个顶点的相似度，若不存在直连边，则 1 阶相似度为0。 如下图，节点 6 和 7 之间存在直连边，且边权较大，则认为两者相似且 1 阶相似度较高，而 5 和 6 之间不存在直连边，则两者间 1 阶相似度为 0。也就是我们上一小节所说的<strong>同质性相似</strong>。</p>
+<p><strong>Second-order proximity</strong>（2 阶相似度）：仅有1阶相似度就够了吗？显然不够，如下图，虽然节点 5 和 6 之间不存在直连边，但是他们有很多相同的相邻节点 （1,2,3,4），这其实也可以表明5和6是相似的，而 2 阶相似度就是用来描述这种关系的。 形式化定义为，令表示顶点 u 与所有其他顶点间的1阶相似度，则 u 与 v 的2阶相似度可以通过 p_u 和 p_v 的相似度表示。若u与v之间不存在相同的邻居顶点，则2阶相似度为0。也就是我们上一小节所说的<strong>结构性相似</strong>。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/line_toy_example.png" alt="Toy information of information network" title="Toy information of information network"></p>
+<p>相比 DeepWalk 纯粹随机游走的序列生成方式，LINE 可以应用于有向图、无向图以及边有权重的网络，并通过将一阶、二阶的邻近关系引入目标函数，能够使最终学出的 node embedding 的分布更为均衡平滑，避免 DeepWalk 容易使 node embedding 聚集的情况发生。下图是论文中的结果对比：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/line_result.png" alt="Result of LINE" title="Result of LINE"></p>
+<p>从图中可以看出，LINE 的效果最好，DeepWalk 对不同颜色的点分得也不错，但是图形中部很多点都挤在一块，而这些点都是出度很大的点，文章提了一句说对于这种点的处理 DeepWalk 会产生很大噪音，但没有详细对此分析。论文还指出，DeepWalk 利用随机游走去捕获邻近关系，更像是深度优先搜索；而LINE的方式更像是广度优先搜索，相对而言更合理。上图中的 GF 代表 graph factorization，本文不作介绍，感兴趣的话可以自行 Google。</p>
+<p>在 DeepWalk 和 LINE 的基础之上，斯坦福大学在 2016 年发布了 <strong>Node2Vec</strong>。算法不但关注了同质性和结构性的相似，更可以在两者之间进行权衡。如何做到的呢？让我们先来回顾，什么是深度优先（DFS），什么是广度优先（BFS）。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_bfs_dfs.png" alt="BFS vs DFS" title="BFS vs DFS"></p>
+<p>那么，节点 u 与其相连的节点 s1、s2、s3、s4 的 embedding 表达应该是接近的，这是同质性相似。节点 u 和节点 s6 都是各自局域网络的中心节点，结构上相似，其 embedding 的表达也应该近似，这是结构性相似。</p>
+<p>如果我们在随机游走的过程中以 BFS 为主，例如获得序列 <code>u-s1-s2-s3</code>，训练出来的 Embedding 向量更多反映了结构性的相似；如果随机游走以 DFS 为主，例如获得序列 <code>u-s4-s5-s6</code> ，则训练出来的 Embedding 向量，更多反应同质性的相似。至于为什么，大家可以先自己思考。</p>
+<p>那 Node2Vec 是如何权衡同质性和结构性相似的呢？换句话说，Node2Vec 如何参数化控制随机游走是更倾向 BFS 还是 DFS 呢？下图足以说明：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_random_walk.png" alt="Illustration of Random Walk in Node2Vec" title="Illustration of Random Walk in Node2Vec"></p>
+<p>上图是 Node2Vec 算法中 Random Walk 的说明，假设我们随机游走到了节点 V，下一步有不同的概率到达临近的节点。假设节点 t 是访问节点 V 之前的节点，设置参数 p 为 “返回参数”（return parameter），控制节点 V 返回到节点 t 的概率，p 越大，从节点 V 返回节点 t 的概率越小。设置参数 q 为 “进出参数”（in-out parameter），控制节点 V 去往节点 x2、x3 的概率，q &gt; 1 时，节点 V 之后更倾向于访问前序节点 t 的共同邻居，q &lt; 1 时，节点 V 之后，更不倾向访问前序节点 t 的邻居。节点 x1 显得有点特殊，因为节点 x1 同时是节点 t 和 V 的邻居，我们设置权重为 1。通过修改参数 p 和 q，我们就能控制 Random Walk 采样过程，是更倾向 DFS 还是 BFS。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/node2vec_result.png" alt="Result of Node2Vec" title="Result of Node2Vec"></p>
+<p>上图是 Node2Vec 的结果，同种颜色代表 Embedding 向量比较接近，节点比较相似。图中上部分参数 p = 1，q = 0.5，结果表现为同质性相似的节点更为接近。下部分参数 p = 1，q = 2，结果表现为结构性相似的节点更为接近。</p>
+<p>Node2Vec 所体现的网络的同质性和结构性在推荐系统中也是可以被很直观的解释的。同质性相同的物品很可能是同品类、同属性、或者经常被一同购买的物品，而结构性相同的物品则是各品类的爆款、各品类的最佳凑单商品等拥有类似趋势或者结构性属性的物品。毫无疑问，二者在推荐系统中都是非常重要的特征表达。由于 Node2Vec 的这种灵活性，以及发掘不同特征的能力，甚至可以把不同 Node2Vec 生成的 embedding 融合共同输入后续深度学习网络，以保留物品的不同特征信息。</p>
+<h1 id="Graph-Embedding-最佳实践：EGES"><a href="#Graph-Embedding-最佳实践：EGES" class="headerlink" title="Graph Embedding 最佳实践：EGES"></a>Graph Embedding 最佳实践：EGES</h1><p>我们介绍了一堆概念和算法，那么实际应用，效果如何呢？</p>
+<p>2018 年，阿里巴巴发表论文，提出了能够落地的 EGES（Enhanced Graph Embedding with Side Information）算法，在约十亿的用户和二十亿的商品这个数据量，进行了 Graph Embedding。其基本思想是 Embedding 过程中引入带权重的补充信息（Side Information），从而解决冷启动的问题。让我们赶紧来看下流程图：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_graph_embedding_overview.png" alt="Overview of Graph Embedding in Taobao" title="Overview of Graph Embedding in Taobao"></p>
+<p>步骤如下：</p>
+<ol>
+<li>首先，我们拥有上亿用户的行为数据，不同的用户，在每个 Session 中，访问了一系列商品，例如用户 u2 两次访问淘宝，第一次查看了两个商品 <code>B-E</code>，第二次产看了三个商品 <code>D-E-F</code>；</li>
+<li>然后，通过用户的行为数据，我们可以建立一个商品图（Item Graph），可以看出，物品A，B之间的边产生的原因就是因为用户U1先后购买了物品A和物品B，所以产生了一条由A到B的有向边。如果后续产生了多条相同的有向边，则有向边的权重被加强。在将所有用户行为序列都转换成物品相关图中的边之后，全局的物品相关图就建立起来了。</li>
+<li>接着，通过 Random Walk 对图进行采样，重新获得商品序列；</li>
+<li>最后，使用 Skip-gram 模型进行 Embedding 。</li>
+</ol>
+<p>仔细的读者已经能够发现，如果出现了新的商品怎么办，如果有个商品从没有被人浏览过怎么办？没有关系，就意味着在图上是孤立的点，也意味着，无法获得 Embedding，这就是<strong>冷启动</strong>的问题。淘宝商城每个小时就有百万级别的商品上线，这些商品该如何推荐呢？</p>
+<p>答案其实已在上面给出，新上线的商品虽然没有被人浏览，但是他们也有类别，品牌，所在城市，性别，风格等等各种属性，也就是 Side Information，我们可以通过这些属性建立商品间的关联。下图是一个简单的例子：</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_cold_start_example.png" alt="Similar items for cold start items" title="Similar items for cold start items"></p>
+<p>如何实现呢？其实并不难。如下图，在训练 Embedding 的时候，不同的补充信息各自经过 Embedding，加权平均汇总到隐含层之后，再用来预测序列中的目标商品。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_embedding_framework.png" alt="The general framework of embedding" title="The general framework of embedding"></p>
+<p>论文对模型性能进行了 A/B Test，在 2017 年 9 月的一周里，EGES 最终比 Base 模型 CTR 高了约 0.5 个百分点。</p>
+<p><img src="https://github.com/JerryRoc/graphs/raw/master/20190605%20Introduction%20to%20Graph%20Embedding/alibaba_online_ctrs.png" alt="Online CTRs of Different Methods" title="Online CTRs of Different Methods"></p>
+<p>阿里的 EGES 并没有过于复杂的理论创新，但给出一个工程性的结合多种 Embedding 的方法，可好解决了冷启动问题，是实用性极强的 Embedding 方法。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>本文一路小跑，终于穿过各种概念，各种算法，不用一个公式，“友好” 地介绍了 Graph Embedding 技术。作为深度学习推荐系统的最新流行，Graph Embedding 肯定会有新的发展。除了本文涉及的算法，还有许多：Laplacian Eigenmaps，Structure Preserving Embedding (SPE)，Graph Factorization (GF)，Structural deep network embedding (SDNE) 等等。学海无涯，祝你航行愉快。</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
+<li>【DeepWalk】DeepWalk- Online Learning of Social Representations，<a href="https://arxiv.org/pdf/1403.6652" target="_blank" rel="noopener">https://arxiv.org/pdf/1403.6652</a></li>
+<li>【LINE】LINE - Large-scale Information Network Embedding，微软 2015，<a href="https://arxiv.org/pdf/1503.03578" target="_blank" rel="noopener">https://arxiv.org/pdf/1503.03578</a></li>
+<li>【Node2vec】Node2vec - Scalable Feature Learning for Networks，斯坦福 2016，<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5108654/" target="_blank" rel="noopener">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5108654/</a></li>
+<li>【EGES】Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba，Alibaba 2018，<a href="https://arxiv.org/pdf/1803.02349.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1803.02349.pdf</a></li>
+<li>【Word2Vec】Efficient Estimation of Word Representations in Vector Space，Google 2013，<a href="https://arxiv.org/pdf/1301.3781" target="_blank" rel="noopener">https://arxiv.org/pdf/1301.3781</a></li>
+<li>【Word2Vec】Distributed Representations of Words and Phrases and their Compositionality，Google 2013，<a href="https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf" target="_blank" rel="noopener">https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf</a></li>
+<li>知乎答案：有谁可以解释下 word embedding?，作者：寒蝉鸣泣，<a href="https://www.zhihu.com/question/32275069/answer/80188672" target="_blank" rel="noopener">https://www.zhihu.com/question/32275069/answer/80188672</a></li>
+<li>知乎文章：Embedding 从入门到专家必读的十篇论文，作者：王喆，<a href="https://zhuanlan.zhihu.com/p/58805184" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/58805184</a></li>
+<li>知乎文章：万物皆 Embedding，从经典的 word2vec 到深度学习基本操作 item2vec，作者：王喆，<a href="https://zhuanlan.zhihu.com/p/53194407" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/53194407</a></li>
+<li>知乎文章：深度学习中不得不学的 Graph Embedding方法，作者：王喆，<a href="https://zhuanlan.zhihu.com/p/64200072" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/64200072</a></li>
+<li>知乎文章：关于 Node2vec 算法中 Graph Embedding 同质性和结构性的进一步探讨，作者：王喆，<a href="https://zhuanlan.zhihu.com/p/64756917" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/64756917</a></li>
+<li>知乎答案：Graph Embedding 和 Network representation learning一样吗？，作者：张小磊，<a href="https://www.zhihu.com/question/292232005/answer/480368644" target="_blank" rel="noopener">https://www.zhihu.com/question/292232005/answer/480368644</a></li>
+<li>知乎文章：【Graph Embedding】DeepWalk：算法原理，实现和应用，作者：浅梦，<a href="https://zhuanlan.zhihu.com/p/56380812" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/56380812</a></li>
+<li>知乎文章：【Graph Embedding】LINE：算法原理，实现和应用，作者：浅梦，<a href="https://zhuanlan.zhihu.com/p/56478167" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/56478167</a></li>
+<li>知乎文章：Graph Embedding：从DeepWalk 到 SDNE，作者：羽刻，<a href="https://zhuanlan.zhihu.com/p/33732033" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33732033</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="https://github.com/JerryRoc/graphs/raw/master/20190417%20Hello%20World/wechat_qcode.png" alt="GuPeng wechat" style="width: 200px; max-width: 100%;">
+  <div>扫码订阅公众号</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/embedding/" rel="tag"># embedding</a>
+          
+            <a href="/tags/graph-embedding/" rel="tag"># graph embedding</a>
+          
+            <a href="/tags/recommendation/" rel="tag"># recommendation</a>
+          
+            <a href="/tags/deepwalk/" rel="tag"># deepwalk</a>
+          
+            <a href="/tags/node2vec/" rel="tag"># node2vec</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/21/R-Visualization/" rel="next" title="R语言：可视化概览">
+                <i class="fa fa-chevron-left"></i> R语言：可视化概览
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">GuPeng</p>
+              <div class="site-description motion-element" itemprop="description">Everything About Data Science.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/JerryRoc" title="GitHub &rarr; https://github.com/JerryRoc" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Embedding-is-all-you-need"><span class="nav-number">1.</span> <span class="nav-text">Embedding is all you need</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Embedding-流行起点：Word2Vec"><span class="nav-number">2.</span> <span class="nav-text">Embedding 流行起点：Word2Vec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Graph-Embedding-早期技术：DeepWalk"><span class="nav-number">3.</span> <span class="nav-text">Graph Embedding 早期技术：DeepWalk</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DeepWalk-的改进：从-LINE-到-Node2Vec"><span class="nav-number">4.</span> <span class="nav-text">DeepWalk 的改进：从 LINE 到 Node2Vec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Graph-Embedding-最佳实践：EGES"><span class="nav-number">5.</span> <span class="nav-text">Graph Embedding 最佳实践：EGES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">6.</span> <span class="nav-text">结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">6.0.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GuPeng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
